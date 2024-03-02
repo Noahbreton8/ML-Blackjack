@@ -15,6 +15,4 @@ def updateCount(cardList, currentCount, deckNumber, deck):
             currentCount -= 1
         else:
             print ("card not in deck")
-
-    currentCount = currentCount/deckNumber
-    return 
+    return currentCount
