@@ -9,10 +9,10 @@
 #output updated count
 def updateCount(cardList, currentCount, deckNumber, deck):
     for card in cardList:
-        if (6>=deck[card]>=2):
-            currentCount += 1
-        elif(11>=deck[card]>=10):
-            currentCount -= 1
+        if (6 >= deck[card] >= 2):
+            currentCount += (1 / deckNumber)
+        elif (11 >= deck[card] >= 10):
+            currentCount -= (1 / deckNumber)
         else:
             print ("card not in deck")
     return currentCount

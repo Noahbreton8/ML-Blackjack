@@ -1,7 +1,6 @@
 from nicegui import ui
 import sys
-sys.path.append("C:/Users/williamdual/OneDrive - Carleton University/GitHub/ML-Blackjack/gameStrategy")
-import cardCounting
+from gameStrategy import cardCounting
 url = "http://machinejack.tech"
 deck = {
     '2h': 2, '3h': 3, '4h': 4, '5h': 5, '6h': 6, '7h': 7, '8h': 8, '9h': 9, '10h': 10, 'jh': 10, 'qh': 10, 'kh': 10, 'ah': 11,
@@ -10,16 +9,16 @@ deck = {
     '2s': 2, '3s': 3, '4s': 4, '5s': 5, '6s': 6, '7s': 7, '8s': 8, '9s': 9, '10s': 10, 'js': 10, 'qs': 10, 'ks': 10, 'as': 11,
 }
 deckNumber = 2
-currentCount = 0
+currentCount = 3
 hand = ["2h", "3h", "4h"]
 
-def add_card():
-    hand.append("5d")
-    update_count()
-def remove_card():
-    hand.pop()
-    update_count()
+# def add_card():
+#     hand.append("5d")
+#     update_count()
 
+# def remove_card():
+#     hand.pop()
+#     update_count()
 
 @ui.refreshable
 def build_home_page():
@@ -29,12 +28,20 @@ def build_home_page():
                                     width: 50%;
                                    """)
     ui.label(currentCount)
-    ui.button("add card", on_click= add_card())
-    ui.button("add card", on_click= remove_card())
+    voice_select = ui.select({0: "male", 1: "female"}, value=1)
+
+    volume_slider = ui.slider(min=0, max=100, value=100)
+    ui.label().bind_text_from(volume_slider,'value')
+    speed_slider = ui.slider(min=50, max=150, value=130)
+    ui.label().bind_text_from(speed_slider,'value')
+
 def update_count():
-    newcc = cardCounting.updateCount(hand, currentCount, deckNumber, deck)
+    global currentCount
+    newcc = cardCounting.update_count(hand[-1], deck, deckNumber)
     if newcc != currentCount:
+        currentCount += newcc
         build_home_page.refresh()
+        
 
 
 def main():
