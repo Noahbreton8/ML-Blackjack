@@ -9,3 +9,9 @@ Noah Breton
 Marco Toito
 Isaac Robert
 William Graham
+
+install:
+pip install jupyter
+pip install tensorflow
+pip install matplotlib
+pip install numpy
