@@ -1,6 +1,7 @@
 from nicegui import ui
 import sys
 from gameStrategy import cardCounting
+from gameStrategy import tts
 url = "http://machinejack.tech"
 deck = {
     '2h': 2, '3h': 3, '4h': 4, '5h': 5, '6h': 6, '7h': 7, '8h': 8, '9h': 9, '10h': 10, 'jh': 10, 'qh': 10, 'kh': 10, 'ah': 11,
@@ -11,6 +12,8 @@ deck = {
 deckNumber = 2
 currentCount = 3
 hand = ["2h", "3h", "4h"]
+
+tts = tts.TTS()
 
 # def add_card():
 #     hand.append("5d")
@@ -28,12 +31,16 @@ def build_home_page():
                                     width: 50%;
                                    """)
     ui.label(currentCount)
-    voice_select = ui.select({0: "male", 1: "female"}, value=1)
 
-    volume_slider = ui.slider(min=0, max=100, value=100)
+    voice_select = ui.select({0: "male", 1: "female"}, value=1, on_change=lambda: tts.set_voice(voice_select.value))
+
+    volume_slider = ui.slider(min=0, max=100, value=100, on_change=lambda: tts.set_volume(volume_slider.value / 100))
     ui.label().bind_text_from(volume_slider,'value')
-    speed_slider = ui.slider(min=50, max=150, value=130)
+
+    speed_slider = ui.slider(min=50, max=150, value=130, on_change=lambda: tts.set_speed(speed_slider.value))
     ui.label().bind_text_from(speed_slider,'value')
+
+    ui.button("Speak", on_click=lambda: tts.speak("Take a look at my machine jack"))
 
 def update_count():
     global currentCount
@@ -41,8 +48,6 @@ def update_count():
     if newcc != currentCount:
         currentCount += newcc
         build_home_page.refresh()
-        
-
 
 def main():
     build_home_page()
