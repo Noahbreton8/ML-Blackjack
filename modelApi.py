@@ -61,7 +61,7 @@ card_map = {
     51: "Queen of Hearts"
 }
 
-model = load_model("./goodModel2")
+model = load_model("./goodModeLastModel22")
 
 def extractModelData(playerImageList, dealerImageList):
 
@@ -72,7 +72,7 @@ def extractModelData(playerImageList, dealerImageList):
         #image = x[0]
 
         # Resize all images to a consistent size
-        image = imread("."+x)
+        image = imread(x)
         image = cv2.resize(image, (180, 180))
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
@@ -83,7 +83,7 @@ def extractModelData(playerImageList, dealerImageList):
 
     imageData = np.array(test_images_data)
 
-    print(imageData)
+    # print(imageData)
 
     predictions=model.predict(imageData)
 
@@ -106,7 +106,7 @@ def extractModelData(playerImageList, dealerImageList):
         #image = x[0]
 
         # Resize all images to a consistent size
-        image = imread("."+x)
+        image = imread(x)
         image = cv2.resize(image, (180, 180))
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
@@ -133,6 +133,5 @@ def extractModelData(playerImageList, dealerImageList):
                 biggestIndex = i
 
         dealerPrediction.append(card_map[biggestIndex])
-
 
     return playerPrediction, dealerPrediction

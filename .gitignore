@@ -1,6 +1,7 @@
 Datasets
 *.npy
 *.csv
+*.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
