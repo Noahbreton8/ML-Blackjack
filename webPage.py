@@ -1,7 +1,12 @@
 from nicegui import ui
-import sys
 from gameStrategy import cardCounting
 from gameStrategy import tts
+import cv2
+import time
+from nicegui.events import KeyEventArguments
+import os
+import atexit
+
 url = "http://machinejack.tech"
 deck = {
     '2h': 2, '3h': 3, '4h': 4, '5h': 5, '6h': 6, '7h': 7, '8h': 8, '9h': 9, '10h': 10, 'jh': 10, 'qh': 10, 'kh': 10, 'ah': 11,
@@ -15,16 +20,14 @@ hand = ["2h", "3h", "4h"]
 
 tts = tts.TTS()
 
-# def add_card():
-#     hand.append("5d")
-#     update_count()
-
-# def remove_card():
-#     hand.pop()
-#     update_count()
+capture = cv2.VideoCapture(0)
+iframe = 0
+piframe = 0
 
 @ui.refreshable
 def build_home_page():
+    keyboard = ui.keyboard(on_key=handle_key)
+
     ui.label("Machine Jack").style("""
                                    font-size: 48px;
                                     margin: auto;
@@ -48,6 +51,23 @@ def update_count():
     if newcc != currentCount:
         currentCount += newcc
         build_home_page.refresh()
+
+def handle_key(e: KeyEventArguments):
+    global iframe
+    global piframe
+    if e.key == 's' and not e.action.repeat:
+        if e.action.keydown:
+            iframe = time.time()
+            if not os.path.exists('images'):
+                os.makedirs('images')
+            if piframe != 0:
+                os.remove(f'images/cam-{piframe}.png')
+            ret, frame = capture.read()
+            cv2.imwrite(f'images/cam-{iframe}.png', frame)
+            build_home_page.refresh()
+        elif e.action.keyup:
+            ui.image(f'images/cam-{iframe}.png')
+            piframe = iframe
 
 def main():
     build_home_page()
