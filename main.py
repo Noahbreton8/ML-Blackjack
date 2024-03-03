@@ -54,3 +54,19 @@ while (True):
     
 capture.release()
 cv.destroyAllWindows()
+
+# def test_2():
+#     # read the input image
+#     image = cv.imread('./images/partition_1.png')
+
+#     # define the alpha and beta
+#     alpha = 0.5 # Contrast control
+#     beta = -70 # Brightness control
+
+#     # call convertScaleAbs function
+#     adjusted = cv.convertScaleAbs(image, alpha=alpha, beta=beta)
+
+#     # display the output image
+#     cv.imwrite('adjusted_2_9.png', adjusted)
+
+# test_2()
