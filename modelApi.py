@@ -1,4 +1,5 @@
 from tensorflow.keras.models import load_model
+import tensorflow as tf
 import cv2
 import numpy as np
 from tqdm import tqdm
@@ -60,7 +61,7 @@ card_map = {
     52: "Six of Clubs"
 }
 
-model = load_model("C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/model")
+model = load_model("C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/goodModel2")
 
 def extractModelData(playerImageList2, dealerImageList2):
     #structure is [(image, id), (image,id) ....]
@@ -74,6 +75,7 @@ def extractModelData(playerImageList2, dealerImageList2):
         # Resize all images to a consistent size
         image = imread(x)
         image = cv2.resize(image, (180, 180))
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
         # Normalize pixel values to be between 0 and 1
         image = image / 255.0
@@ -84,8 +86,13 @@ def extractModelData(playerImageList2, dealerImageList2):
         test_images_data.append(image)
         test_labels_data.append(x[1])
 
-    np.save('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPI.npy', test_images_data)
-    imageData = np.load('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPI.npy', allow_pickle=True)
+    # np.save('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPI.npy', test_images_data)
+    # imageData = np.load('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPI.npy', allow_pickle=True)
+
+    np.save('images_dataAPI.npy', test_images_data)
+    imageData = np.load('images_dataAPI.npy', allow_pickle=True)
+
+    print(imageData)
 
     predictions=model.predict(imageData)
 
@@ -124,8 +131,8 @@ def extractModelData(playerImageList2, dealerImageList2):
         test_images_data2.append(image)
         test_labels_data2.append(x[1])
 
-    np.save('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPIDealer.npy', test_images_data2)
-    imageDataDealer = np.load('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPIDealer.npy', allow_pickle=True)
+    np.save('images_dataAPIDealer.npy', test_images_data2)
+    imageDataDealer = np.load('images_dataAPIDealer.npy', allow_pickle=True)
 
     predictions2=model.predict(imageDataDealer)
 
