@@ -30,13 +30,6 @@ def contains_card(frame: MatLike) -> bool:
 
             if blue >= WHITE_BOUND and green >= WHITE_BOUND and red >= WHITE_BOUND:
                 pixelMatches += 1
-            # works = True
-            # for k in color:
-            #     if not (whiteRange[0] > k and k < whiteRange[1]):
-            #         works = False
-            # if works:
-            #     #print("pixel matches ", pixelMatches)
-            #     pixelMatches += 1
             if pixelMatches >= matchesRequired:
                 return True
     return False
@@ -80,19 +73,3 @@ while (True):
     
 capture.release()
 cv.destroyAllWindows()
-
-# def test_2():
-#     # read the input image
-#     image = cv.imread('./images/partition_1.png')
-
-#     # define the alpha and beta
-#     alpha = 0.5 # Contrast control
-#     beta = -70 # Brightness control
-
-#     # call convertScaleAbs function
-#     adjusted = cv.convertScaleAbs(image, alpha=alpha, beta=beta)
-
-#     # display the output image
-#     cv.imwrite('adjusted_2_9.png', adjusted)
-
-# test_2()
