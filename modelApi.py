@@ -61,37 +61,27 @@ card_map = {
     51: "Queen of Hearts"
 }
 
-model = load_model("C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/goodModel2")
+model = load_model("./goodModel2")
 
-def extractModelData(playerImageList2, dealerImageList2):
-    #structure is [(image, id), (image,id) ....]
+def extractModelData(playerImageList, dealerImageList):
 
     test_images_data=[]##numpyarrays
-    test_labels_data=[]
+    test_images_data2=[]
 
-    for x in playerImageList2:
+    for x in playerImageList:
         #image = x[0]
 
         # Resize all images to a consistent size
-        image = imread(x)
+        image = imread("."+x)
         image = cv2.resize(image, (180, 180))
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
         # Normalize pixel values to be between 0 and 1
         image = image / 255.0
 
-        # Expand dimensions to make it compatible with the model
-        #image = np.expand_dims(image, axis=-1)
-
         test_images_data.append(image)
 
     imageData = np.array(test_images_data)
-
-    # np.save('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPI.npy', test_images_data)
-    # imageData = np.load('C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/images_dataAPI.npy', allow_pickle=True)
-
-    # np.save('images_dataAPI.npy', test_images_data)
-    # imageData = np.load('images_dataAPI.npy', allow_pickle=True)
 
     print(imageData)
 
@@ -111,42 +101,38 @@ def extractModelData(playerImageList2, dealerImageList2):
         playerPrediction.append(card_map[biggestIndex])
 
     #DEALER
-
-    test_images_data2 = []
-    test_labels_data2 = []
-
-    for x in dealerImageList2:
-        image = x[0]
+        
+    for x in dealerImageList:
+        #image = x[0]
 
         # Resize all images to a consistent size
-        image = imread(x)
+        image = imread("."+x)
         image = cv2.resize(image, (180, 180))
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
         # Normalize pixel values to be between 0 and 1
         image = image / 255.0
 
-        # Expand dimensions to make it compatible with the model
-        image = np.expand_dims(image, axis=-1)
-
         test_images_data2.append(image)
-        test_labels_data2.append(x[1])
 
-    np.save('images_dataAPIDealer.npy', test_images_data2)
-    imageDataDealer = np.load('images_dataAPIDealer.npy', allow_pickle=True)
+    imageData2 = np.array(test_images_data2)
 
-    predictions2=model.predict(imageDataDealer)
+    print(imageData)
 
+    predictions2=model.predict(imageData2)
+
+    # print(predictions[0])
     dealerPrediction = []
 
-    for s in enumerate(predictions2[:16]):
-        
+    for s in predictions2:
         biggest = 0
         biggestIndex = -1
-        for i in range(53):
-            if s[1][i] > biggest:
-                biggest = s[1][i]
+        for i in range(52):
+            if s[i] > biggest:
+                biggest = s[i]
                 biggestIndex = i
 
         dealerPrediction.append(card_map[biggestIndex])
+
 
     return playerPrediction, dealerPrediction

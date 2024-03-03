@@ -113,12 +113,12 @@ def change_mode(switch: ui.switch):
 
 
 def main():
-    #build_home_page()
+    build_home_page()
     #ui.run()
     #call screen splitting
     
     #call to api
-    playerData, dealerData = extractModelData(['C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/Datasets/test/test/the-diamonds-ace-clip-art-vector_csp56384568.jpg'],[])
+    playerData, dealerData = extractModelData(['/Datasets/test/test/the-diamonds-ace-clip-art-vector_csp56384568.jpg'],["/Datasets/test/test/the-diamonds-ace-clip-art-vector_csp56384568.jpg"])
 
 if __name__ in {"__main__", "__mp_main__"}:
     main()
