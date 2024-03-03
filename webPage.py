@@ -6,6 +6,7 @@ import time
 from nicegui.events import KeyEventArguments
 import os
 import atexit
+from modelApi import extractModelData
 
 url = "http://machinejack.tech"
 deck = {
@@ -114,6 +115,11 @@ def change_mode(switch: ui.switch):
 def main():
     build_home_page()
     ui.run()
+    #call screen splitting
+    
+    #call to api
+    playerData, dealerData = extractModelData(['C:/Users/nmb20/UNiversities/Projects/Hackathon/UOttaHack6/ML-Blackjack/ML-Blackjack/Datasets/test/test/600x600.jpg'],[])
+
 
 if __name__ in {"__main__", "__mp_main__"}:
     main()
