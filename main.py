@@ -34,23 +34,22 @@ while (True):
 
     fgMask = backSub.apply(frame, learningRate=0)
 
-    # cv.imshow('FG Mask', fgMask)
+    cv.imshow('FG Mask', fgMask)
 
-    if cv.waitKey(1) == ord('b'):
-        cv.imwrite('images/bg.png', frame)
-    if cv.waitKey(1) == ord('s'):
-        cv.imwrite('images/cam.png', frame)
-    if cv.waitKey(1) == ord('l'):
+    if cv.waitKey(5) == ord('b'):
+        cv.imwrite('./images/bg.png', frame)
+    if cv.waitKey(5) == ord('s'):
+        cv.imwrite('./images/cam.png', frame)
+    if cv.waitKey(5) == ord('l'):
         partitions = []
         for i in range(3):
             for j in range(4):
                 partitions.append(frame[int(HEIGHT/3)*i:int(HEIGHT/3)*(i+1), int(WIDTH/4)*j:int(WIDTH/4)*(j+1)])    
 
-        for part in partitions:
-            cv.imwrite(f'images/partition_{part}.png', part)
-        print('Saved partitions')
+        for i in range(0, 8):
+            cv.imwrite(f'./images/partition_{i}.png', partitions[i])
 
-    elif cv.waitKey(1) == ord('q'):
+    if cv.waitKey(5) == ord('q'):
         break
     
 capture.release()
