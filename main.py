@@ -71,7 +71,7 @@ player_hand = [-1,-1,-1,-1] #-1 -> no card, int -> image is processing, str -> n
 dealer_hand = [-1,-1,-1,-1]
 player_hand_size = 0
 dealer_hand_size = 0
-
+currentCount = 0
 #tts
 tts = tts.TTS()
 
@@ -141,7 +141,10 @@ while (True):
             while True:
                 if isinstance(player_hand[i], int) and player_hand[i] != -1: #if card needs to be counted and saved, do so
                     card_name = playerHand[player_hand]
-                    cc.update_count(card_deck_translation[playerData[player_hand]], deck, 2)#might change to 1
+                    currentCount += cc.update_count(card_deck_translation[playerData[player_hand]], deck, 2)#might change to 1
+                    # newcc = cc.update_count(card_deck_translation[playerData[player_hand]], deck, 2)#might change to 1<- might need this instead
+                    # if newcc != currentCount: <- might need this
+                    #     currentCount += newcc
                     player_hand[i] = playerData[j]
                     i += 1
                     j += 1
@@ -175,7 +178,7 @@ while (True):
     cv.line(frame, (0, int(HEIGHT/3)), (WIDTH, int(HEIGHT/3)), (0, 255, 0), 2)
     for i in range(1, 4):
         cv.line(frame, (int(WIDTH*i/4), 0), (int(WIDTH*i/4), HEIGHT), (0, 255, 0), 2)
-
+    cv.putText(frame, "Test text", (10, 10))
     cv.imshow('stream', frame)
 
     if cv.waitKey(5) == ord('q'):
